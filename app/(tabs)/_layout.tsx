@@ -13,6 +13,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          headerShown: true,
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon FontAwesomeName={"home"} color={color} />

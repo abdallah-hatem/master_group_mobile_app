@@ -1,8 +1,8 @@
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Slot, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import "../global.css";
 import { StatusBar } from "react-native";
@@ -39,15 +39,42 @@ export default function RootLayout() {
     return null;
   }
 
+  // const AppStack = () => {
+  //   return (
+  //     <Stack>
+  //       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+  //       <Stack.Screen name="+not-found" />
+  //     </Stack>
+  //   );
+  // };
+
+  const InitialLayout = () => {
+    const [isLoaded] = useFonts({
+      SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    });
+
+    const isSignedIn = false;
+
+    useEffect(() => {
+      if (!isLoaded) return;
+
+      if (isSignedIn) {
+        router.replace("/(tabs)/market");
+      } else if (!isSignedIn) {
+        // @ts-ignore
+        router.replace("/(public)/login");
+      }
+    }, [isSignedIn]);
+
+    return <Slot />;
+  };
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider value={DefaultTheme}>
           <StatusBar barStyle={"dark-content"} />
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <InitialLayout />
         </ThemeProvider>
       </PersistGate>
     </Provider>
