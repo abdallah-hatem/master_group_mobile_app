@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { setLang } from "@/store/lang.store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "@/i18";
+import { MD3LightTheme as DefaultThemePaper, PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -39,14 +40,14 @@ export default function RootLayout() {
     return null;
   }
 
-  // const AppStack = () => {
-  //   return (
-  //     <Stack>
-  //       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-  //       <Stack.Screen name="+not-found" />
-  //     </Stack>
-  //   );
-  // };
+  const themePaper = {
+    ...DefaultThemePaper,
+    colors: {
+      ...DefaultThemePaper.colors,
+      primary: "purple",
+      secondary: "white",
+    },
+  };
 
   const InitialLayout = () => {
     const [isLoaded] = useFonts({
@@ -73,8 +74,10 @@ export default function RootLayout() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider value={DefaultTheme}>
-          <StatusBar barStyle={"dark-content"} />
-          <InitialLayout />
+          <PaperProvider theme={themePaper}>
+            <StatusBar barStyle={"dark-content"} />
+            <InitialLayout />
+          </PaperProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

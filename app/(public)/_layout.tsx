@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 const PublicLayout = () => {
   return (
     <Stack screenOptions={{}}>
-      <Stack.Screen name="login" options={{}}></Stack.Screen>
+      <Stack.Screen name="login" options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen
         name="register"
         options={{
