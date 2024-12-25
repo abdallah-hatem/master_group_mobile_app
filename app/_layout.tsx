@@ -54,18 +54,24 @@ export default function RootLayout() {
       SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     });
 
-    const isSignedIn = false;
-
     useEffect(() => {
       if (!isLoaded) return;
 
-      if (isSignedIn) {
-        router.replace("/(tabs)/market");
-      } else if (!isSignedIn) {
-        // @ts-ignore
-        router.replace("/(public)/login");
-      }
-    }, [isSignedIn]);
+      router.replace("/(tabs)/market");
+    }, [isLoaded]);
+
+    // const isSignedIn = false;
+
+    // useEffect(() => {
+    //   if (!isLoaded) return;
+
+    //   if (isSignedIn) {
+    //     router.replace("/(tabs)/market");
+    //   } else if (!isSignedIn) {
+    //     // @ts-ignore
+    //     router.replace("/(public)/login");
+    //   }
+    // }, [isSignedIn]);
 
     return <Slot />;
   };
